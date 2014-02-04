@@ -41,6 +41,7 @@
 
         	<fatjar.jarsource file="${publishDir}\aclient_mobile_${version.number}.${build.number}.jar" relpath=""/> 
         	<fatjar.jarsource file="${libDir}\netty-3.2.7.Final.jar" relpath=""/> 
+        	<fatjar.jarsource file="${libDir}\log4j-1.2.14.jar" relpath=""/> 
         </fatjar.build>
     </target>
 	
