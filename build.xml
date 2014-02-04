@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="builder_for_aradon" default="publish">
+
+	<property name="baseDir" value="." />
+	<property name="binDir" value="./bin" />
+	<property name="publishDir" value="./publish" />
+	<property name="libDir" value="./lib" />
+	
+	<tstamp>
+	  <format property="TODAY_MY" pattern="MM/dd/yyyy hh:mm"/>
+	</tstamp>
+	
+	<property name="manifest.classpath" value="lib/netty-3.2.7.Final.jar" />
+	<property name="version.number" value="0" />
+	<property name="build.number" value="4" />
+	
+	<target name="publish" >
+		<delete file="publish/aclient_mobile_${version.number}.${build.number}.jar"></delete>
+		<jar destfile="publish/aclient_mobile_${version.number}.${build.number}.jar">
+			<manifest>
+			  <attribute name="Built-By" value="${user.name}"/>
+			  <attribute name="Created-By" value="${user.name}"/>
+			  <attribute name="Main-Class" value="${manifest.main.class}" />
+			  <attribute name="Built-Date" value="${TODAY_MY}" />
+			  <attribute name="Class-Path" value="${manifest.classpath}" />
+			  <section name="common">
+			    <attribute name="Specification-Title" value="i-on aradon platform"/>
+			    <attribute name="Specification-Version" value="${version.number}.${build.number}"/>
+			    <attribute name="Specification-Vendor" value="i-on"/>
+			  </section>
+			</manifest>
+			<fileset dir="${binDir}/" includes="net/**" />
+			<fileset dir="${binDir}/" includes="org/**" />
+		</jar>
+	</target>
+
+    <target name="publish_fat" depends="publish">
+    	<delete file="publish/aclient_mobile_fat_${version.number}.${build.number}.jar"></delete>
+        <fatjar.build output="publish/aclient_mobile_fat_${version.number}.${build.number}.jar">
+            <fatjar.manifest/>
+
+        	<fatjar.jarsource file="${publishDir}\aclient_mobile_${version.number}.${build.number}.jar" relpath=""/> 
+        	<fatjar.jarsource file="${libDir}\netty-3.2.7.Final.jar" relpath=""/> 
+        </fatjar.build>
+    </target>
+	
+</project>
